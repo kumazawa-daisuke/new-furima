@@ -1,0 +1,95 @@
+.global-header {
+    background: #111;
+    color: #fff;
+    width: 100%;
+    padding: 0 0;
+    font-family: "Meiryo", sans-serif;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 56px;
+    padding: 0 24px;
+}
+
+.logo img,
+.logo {
+    display: block;
+    height: 28px;
+    margin-right: 36px;
+}
+
+.search-form {
+    flex: 1;
+    margin-right: 36px;
+    min-width: 280px;
+}
+
+.search-form input[type="text"] {
+    width: 500px;
+    min-width: 100px;
+    max-width: 98vw;
+    padding: 8px 12px;
+    border-radius: 2px;
+    border: none;
+    font-size: 14px;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 16px;
+    font-size: 15px;
+}
+
+.nav-link:hover,
+.nav-btn:hover {
+    opacity: 0.7;
+}
+
+.nav-btn {
+    background: #fff;
+    color: #111;
+    border: none;
+    border-radius: 2px;
+    padding: 7px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+.logout-form {
+    display: inline;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: none;
+}
+
+.logout-btn:hover {
+    color: #f00;
+}
+
+.logo-img {
+    width: auto;
+    max-width: 600px;
+    display: block;
+}

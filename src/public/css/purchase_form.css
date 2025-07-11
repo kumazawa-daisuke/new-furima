@@ -1,0 +1,245 @@
+.purchase-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 70px;
+    max-width: 1200px;
+    margin: 56px auto 0 auto;
+    padding: 0 24px;
+}
+
+.purchase-left {
+    flex: 2;
+    min-width: 440px;
+    max-width: 650px;
+}
+
+.purchase-product-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.purchase-img-block {
+    min-width: 145px;
+    max-width: 145px;
+    margin-right: 38px;
+}
+
+.purchase-img {
+    width: 145px;
+    height: 145px;
+    object-fit: contain;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.purchase-title-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.purchase-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-top: 0;
+    line-height: 1.1;
+}
+
+.purchase-price {
+    font-size: 2rem;
+    color: #222;
+    margin-top: 6px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.purchase-divider {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 22px 0 19px 0;
+    height: 0;
+}
+
+.purchase-method-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    gap: 10px;
+}
+
+.purchase-method-label {
+    font-size: 1.23rem;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.purchase-method-select-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.purchase-select {
+    width: 320px;
+    font-size: 1.1rem;
+    padding: 9px 13px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    background: #fff;
+    margin-left: 56px;
+}
+
+.purchase-address-row {
+    margin-bottom: 0;
+}
+
+.purchase-address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+.purchase-address-label {
+    font-size: 1.19rem;
+    font-weight: bold;
+}
+
+.purchase-address-edit-btn {
+    font-size: 1rem;
+    color: #2176ff;
+    text-decoration: underline;
+    white-space: nowrap;
+    align-self: center;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 22px;
+}
+
+.purchase-address-content-block {
+    margin-left: 72px;
+    margin-bottom: 28px;
+}
+
+.purchase-address-content {
+    font-size: 1.13rem;
+    color: #222;
+    line-height: 2.4;
+    word-break: break-all;
+    padding-left: 0;
+}
+
+.purchase-right {
+    flex: 1.2;
+    min-width: 340px;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 0;
+}
+
+.purchase-summary-table {
+    width: 100%;
+    margin-bottom: 28px;
+    border: 1px solid #222;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 0;
+    border-radius: 0;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.13rem;
+    padding: 26px 24px 16px 24px;
+    margin-bottom: 0;
+}
+
+.summary-label {
+    min-width: 110px;
+    font-size: 1.10rem;
+    color: #222;
+    font-weight: normal;
+}
+
+.summary-value {
+    font-size: 1.35rem;
+    font-weight: normal;
+    color: #222;
+    margin-left: 25px;
+}
+
+.summary-divider {
+    border: none;
+    border-bottom: 1px solid #222;
+    margin: 0;
+    width: 100%;
+    height: 0;
+}
+
+.purchase-btn {
+    width: 100%;
+    background: #ff5c5c;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 7px;
+    font-size: 1.18rem;
+    padding: 10px 0 10px 0;
+    margin: 18px 0 0 0;
+    cursor: pointer;
+    transition: background 0.18s;
+    box-sizing: border-box;
+}
+
+.purchase-btn:hover {
+    background: #e04848;
+}
+
+@media (max-width: 1020px) {
+    .purchase-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 30px;
+    }
+
+    .purchase-right {
+        max-width: 100%;
+        margin-top: 38px;
+    }
+}
+
+.sold-overlay {
+    position: absolute;
+    top: 10px;
+    /* 画像の左上寄せ */
+    left: 10px;
+    background: rgba(255, 255, 255, 0.85);
+    color: red;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 4px 18px;
+    border-radius: 12px;
+    z-index: 10;
+    pointer-events: none;
+    border: 2px solid red;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-error {
+    color: #e33;
+    font-size: 0.97em;
+    margin-top: 4px;
+}
