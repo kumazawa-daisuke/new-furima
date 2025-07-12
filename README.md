@@ -34,6 +34,11 @@ php artisan migrate
 php artisan db:seed  
 8.シンボリックリンクの作成  
 php artisan storage:link  
+9.Stripeキーの設定  
+※stripeのユーザー登録は済ませておいてください  
+.envファイルに公開可能キーとシークレットキーを追加  
+STRIPE_SECRET=sk_test_xxxxxxxxxxxxxxxxxxxxxxx  
+STRIPE_PUBLIC_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxx  
 
 ##サンプル用ログインアドレス・パスワード  
 メールアドレス:test@example.com  
