@@ -10,18 +10,6 @@ use App\Http\Requests\AddressRequest;
 
 class AddressController extends Controller
 {
-    // 配送先住所入力画面
-    public function create($item_id)
-    {
-        return view('addresses_edit', compact('item_id'));
-    }
-
-    // 住所保存処理
-    public function store(Request $request)
-    {
-        return redirect()->route('mypage');
-    }
-
     // 住所編集フォーム表示
     public function edit($item_id)
     {

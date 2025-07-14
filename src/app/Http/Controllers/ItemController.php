@@ -46,12 +46,6 @@ class ItemController extends Controller
         return view('items_show', compact('item'));
     }
 
-    // 商品出品画面
-    public function sell()
-    {
-        return view('items_sell');
-    }
-
     // 例: 出品フォーム表示用
     public function create()
     {
