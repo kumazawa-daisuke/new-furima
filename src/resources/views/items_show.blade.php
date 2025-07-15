@@ -129,10 +129,12 @@
                 <form action="{{ route('comments.store', $item->id) }}" method="POST" class="comment-form" novalidate>
                     @csrf
                     <textarea name="content" rows="7" placeholder="商品のコメント" required>{{ old('content') }}</textarea>
-                    @error('content')
-                        <div class="form-error">{{ $message }}</div>
-                    @enderror
-                        <button type="submit" class="btn-comment">コメントを送信する</button>
+                    @if(isset($errors))
+                        @error('content')
+                            <div class="form-error">{{ $message }}</div>
+                        @enderror
+                    @endif
+                    <button type="submit" class="btn-comment">コメントを送信する</button>
                 </form>
                 @else
                     <div class="not-login-message">コメントするにはログインしてください。</div>

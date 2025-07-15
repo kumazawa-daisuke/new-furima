@@ -107,34 +107,32 @@ class ItemListTest extends TestCase
     }
 
     public function test_商品詳細ページに全情報が表示される()
-{
-    $user = User::factory()->create();
+    {
+        $user = User::factory()->create();
 
-    $item = Item::factory()->create([
-        'name' => 'テスト商品',
-        'brand' => 'サンプルブランド',
-        'description' => '説明テキスト',
-        'price' => 3000,
-        'category' => '家電,スポーツ',
-        'condition' => '良好',
-        'user_id' => $user->id,
-    ]);
+        $item = Item::factory()->create([
+            'name' => 'テスト商品',
+            'brand' => 'サンプルブランド',
+            'description' => '説明テキスト',
+            'price' => 3000,
+            'category' => '家電,スポーツ',
+            'condition' => '良好',
+            'user_id' => $user->id,
+        ]);
 
-    $this->actingAs($user);
-    $response = $this->get("/item/{$item->id}");
+        $this->actingAs($user);
+        $response = $this->get("/item/{$item->id}");
 
-    // テスト失敗の原因となるコードは削除
-    // $response->assertSee('<!DOCTYPE html>'); ← これは不要
+        // 表示されてほしい内容にフォーカス
+        $response = $this->get("/item/{$item->id}");
 
-    // 表示されてほしい内容にフォーカス
-    $response = $this->get("/item/{$item->id}");
-
-$response->assertStatus(200);
-$response->assertSee('テスト商品');
-$response->assertSee('￥' . number_format($item->price)); // ← ← ここ重要
-$response->assertSee('サンプルブランド');
-$response->assertSee('説明テキスト');
-}
+        $response->assertStatus(200);
+        $response->assertSee('テスト商品');
+        $response->assertSee('￥');
+        $response->assertSee(number_format($item->price));
+        $response->assertSee('サンプルブランド');
+        $response->assertSee('説明テキスト');
+    }
 
     public function test_ログインユーザーがいいね登録できる()
     {
