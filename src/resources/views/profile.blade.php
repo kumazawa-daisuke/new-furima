@@ -10,7 +10,7 @@
         @if(!empty($user->profile_image))
             <img src="{{ asset('storage/profile/'.$user->profile_image) }}" alt="プロフィール画像" class="profile-avatar">
         @else
-            <i class="fa-solid fa-user-circle default-icon"></i>
+            <div class="profile-avatar default-profile-placeholder"></div>
         @endif
         
         <div class="profile-name-and-rating">

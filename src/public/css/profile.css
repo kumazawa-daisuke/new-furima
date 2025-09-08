@@ -17,14 +17,12 @@
     border: 1px solid #ddd;
 }
 
-.default-icon {
-    display: inline-block;
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
+/* プロフィール画像がない場合のプレースホルダー */
+.default-profile-placeholder {
     background: #ddd;
-    border: 1px solid #ccc;
+    /* 灰色に設定 */
 }
+
 
 /* ユーザー名と評価をまとめたコンテナのスタイル */
 .profile-name-and-rating {
@@ -51,7 +49,6 @@
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
     margin-left: 40px;
-    /* 必要に応じて調整してください */
     text-decoration: none;
     display: inline-block;
 }
@@ -218,7 +215,6 @@
 /* 評価がない場合のテキスト */
 .no-rating {
     display: none;
-    /* ★ 非表示にする ★ */
 }
 
 @media (max-width: 700px) {
