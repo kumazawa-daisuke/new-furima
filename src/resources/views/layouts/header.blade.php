@@ -18,6 +18,7 @@
         'verification.notice',       // メール認証案内ページ
         'verification.send',         // メール認証再送
         'verification.verify',       // メール認証本体
+        'chat',
     ];
 @endphp
 

@@ -5,28 +5,83 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProfileRequest;
+use App\Models\Purchase;
+use App\Models\Rating;
+use App\Models\Message;
 
 class ProfileController extends Controller
 {
     // マイページ
     public function index(Request $request)
-    {
-        $user = Auth::user();
-        $tab = $request->input('tab', 'sell'); // デフォルトは'sell'
+{
+    $user = Auth::user();
+    $tab = $request->input('tab', 'sell');
 
-        if ($tab === 'buy') {
-            // 購入した商品のリスト
-            $items = $user->purchases()->with('item')->get()->pluck('item')->filter();
-        } else {
-            $items = $user->sellingItems()->with(['likes', 'comments'])->get();
+    // 未読メッセージの総数と各取引の未読数を計算
+    $trading_purchases = \App\Models\Purchase::whereIn('status', ['in_progress', 'awaiting_seller_rating'])
+        ->where(function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                ->orWhereHas('item', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                });
+        })
+        ->with('messages')->get();
+
+    $total_unread_count = 0;
+    foreach ($trading_purchases as $purchase) {
+        $unread_count = $purchase->messages()->where('sender_id', '!=', $user->id)->where('read_at', null)->count();
+        $purchase->unread_count = $unread_count;
+        $total_unread_count += $unread_count;
+    }
+
+    // ユーザーが受け取ったすべての評価を取得
+    $ratings = Rating::where('rated_id', $user->id)->pluck('rating');
+
+    // 評価の平均値を計算し、小数点以下を四捨五入
+    $averageRating = null;
+    if ($ratings->isNotEmpty()) {
+        $averageRating = round($ratings->avg());
+    }
+    
+    if ($tab === 'buy') {
+        // 購入した商品のリスト
+        $items = $user->purchases()->with('item')->get()->pluck('item')->filter();
+    } elseif ($tab === 'trading') {
+        // 取引中の商品のリストを取得し、メッセージの並び替えと未読数の計算をまとめて行う
+        $items = Purchase::whereIn('status', ['in_progress', 'awaiting_seller_rating'])
+            ->where(function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                    ->orWhereHas('item', function ($q) use ($user) {
+                        $q->where('user_id', $user->id);
+                    });
+            })
+            // 最新メッセージのcreated_atで並び替える
+            ->orderByDesc(
+                \App\Models\Message::select('created_at')
+                    ->whereColumn('purchase_id', 'purchases.id')
+                    ->latest()
+                    ->limit(1)
+            )
+            ->with(['item', 'messages'])->get();
+        
+        // 未読メッセージ数を各$itemsに反映
+        foreach($items as $item) {
+            $item->unread_count = $trading_purchases->firstWhere('id', $item->id)->unread_count ?? 0;
         }
 
-        return view('profile', [
-            'user' => $user,
-            'tab' => $tab,
-            'items' => $items,
-        ]);
+    } else {
+        // 出品中の商品
+        $items = $user->sellingItems()->with(['likes', 'comments'])->get();
     }
+
+    return view('profile', [
+        'user' => $user,
+        'tab' => $tab,
+        'items' => $items,
+        'total_unread_count' => $total_unread_count,
+        'averageRating' => $averageRating,
+    ]);
+}
 
     // プロフィール編集画面
     public function edit()

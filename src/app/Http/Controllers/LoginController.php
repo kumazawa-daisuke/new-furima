@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
 
 class LoginController extends Controller
 {
@@ -19,14 +20,21 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            // 認証成功
-            return redirect('/');
+            $user = Auth::user();
+
+            if (!$user->hasVerifiedEmail()) {
+                $user->sendEmailVerificationNotification();
+                return redirect()->route('verification.notice');
+            }
+
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
-        // 認証失敗
+
         return back()->withErrors([
             'email' => 'ログイン情報が登録されていません',
         ])->withInput($request->only('email'));
     }
+
 
     public function logout(Request $request)
     {

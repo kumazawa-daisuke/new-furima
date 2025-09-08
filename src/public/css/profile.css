@@ -1,3 +1,5 @@
+/* profile.css */
+
 .profile-header {
     display: flex;
     align-items: center;
@@ -24,24 +26,32 @@
     border: 1px solid #ccc;
 }
 
+/* ユーザー名と評価をまとめたコンテナのスタイル */
+.profile-name-and-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .profile-username {
     font-size: 2.2rem;
     font-weight: bold;
-    margin: 0 40px;
+    margin: 0;
     letter-spacing: 2px;
 }
 
 .profile-edit-btn {
     padding: 6px 18px;
     border-radius: 6px;
-    border: 2px solid #f66;
+    border: 2px solid #ff0000;
     background: #fff;
-    color: #f66;
+    color: #ff0000;
     font-size: 15px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
     margin-left: 40px;
+    /* 必要に応じて調整してください */
     text-decoration: none;
     display: inline-block;
 }
@@ -68,11 +78,12 @@
     padding: 0 12px 10px 0;
     border-bottom: 3px solid transparent;
     transition: color 0.2s, border-bottom 0.2s;
+    position: relative;
 }
 
 .profile-tabs a.active {
-    color: #f66;
-    border-bottom: 3px solid #f66;
+    color: #ff0000;
+    border-bottom: 3px solid #ff0000;
 }
 
 .profile-items {
@@ -85,17 +96,35 @@
 .item-card {
     width: 200px;
     margin: 12px;
-    background: #eee;
     text-align: center;
     border-radius: 4px;
     padding: 16px 0;
 }
 
 .item-img {
-    width: 120px;
-    height: 120px;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
     margin-bottom: 8px;
+    display: block;
+    border-radius: 6px;
+}
+
+.item-img.no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 180px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    background: #e0e0e0;
+    color: #888;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 1.5px dashed #b0b0b0;
+    user-select: none;
 }
 
 .item-name {
@@ -105,20 +134,21 @@
 
 .item-img-block {
     position: relative;
-    display: inline-block;
-    width: 100%;
+    display: block;
+    width: 180px;
+    margin: 0 auto;
 }
 
 .sold-overlay {
     position: absolute;
     top: 16px;
     left: 16px;
-    width: 68px;
-    height: 68px;
-    background: rgba(255, 255, 255, 0.98);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.96);
     color: #e60033;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.2em;
     border-radius: 50%;
     border: 3px solid #e60033;
     display: flex;
@@ -127,33 +157,120 @@
     z-index: 10;
     pointer-events: none;
     letter-spacing: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     text-align: center;
-    font-family: inherit;
 }
 
-@media (max-width: 640px) {
+.notification-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: #ff0000;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    z-index: 10;
+}
 
-    .profile-header,
-    .profile-items {
+.notification-count {
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    transform: translateY(-50%);
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    min-width: 22px;
+    height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 22px;
+    padding: 0 4px;
+}
+
+/* 平均評価の星コンテナ */
+.average-rating-stars {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    gap: 2px;
+    margin-top: 8px;
+}
+
+/* 塗りつぶされた星 */
+.star-filled {
+    color: #fdd835;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 空の星 */
+.star-empty {
+    color: #d9d9d9;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 評価がない場合のテキスト */
+.no-rating {
+    display: none;
+    /* ★ 非表示にする ★ */
+}
+
+@media (max-width: 700px) {
+    .profile-header {
         flex-direction: column;
         align-items: center;
         gap: 20px;
         padding: 12px 4vw;
     }
 
-    .profile-tabs {
-        padding-left: 10px;
-        font-size: 1rem;
+    .profile-items {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 6px 1vw;
+        gap: 10px 2vw;
+        max-width: 100%;
     }
 
     .item-card {
-        width: 94vw;
-        max-width: 320px;
+        width: 47vw;
+        min-width: 120px;
+        max-width: 175px;
+        margin: 6px 2vw;
+        padding: 8px 0;
     }
 
-    .item-img {
-        width: 100px;
-        height: 100px;
+    .item-img-block,
+    .item-img,
+    .item-img.no-image {
+        width: 95%;
+        max-width: 135px;
+        height: 135px;
+        margin: 0 auto 6px auto;
+    }
+
+    .item-name {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 450px) {
+    .item-card {
+        width: 96vw;
+        min-width: 0;
+        max-width: 100vw;
+        padding: 7px 0;
+    }
+
+    .item-img-block,
+    .item-img,
+    .item-img.no-image {
+        max-width: 90vw;
+        height: 90vw;
     }
 }

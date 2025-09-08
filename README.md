@@ -53,7 +53,7 @@ STRIPE_PUBLIC_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxx
 
 
 ## 使用技術(実行環境)
-・PHP7.4.9  
+・PHP8.0  
 ・Laravel8.83.8  
 ・MySQL8.0.26  
 ・MailHog（開発用メールサーバ）  

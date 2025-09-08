@@ -15,11 +15,17 @@ class AddressController extends Controller
     {
         $user = Auth::user();
         $address = $user->address;
-        $item = Item::findOrFail($item_id);
+
+        if ($item_id == 0) {
+            $item = null;
+        } else {
+            $item = Item::findOrFail($item_id);
+        }
 
         return view('address_edit', [
             'item'    => $item,
             'address' => $address,
+            'item_id' => $item_id // ★この行を追加
         ]);
     }
 
@@ -36,7 +42,11 @@ class AddressController extends Controller
         $address->address     = $request->input('address');
         $address->building    = $request->input('building');
         $address->save();
-
-        return redirect()->route('purchase.form', $item_id)->with('success', '住所を更新しました');
+        
+        if ($item_id == 0) {
+            return redirect()->route('items.index')->with('success', '住所を登録しました');
+        } else {
+            return redirect()->route('purchase.form', $item_id)->with('success', '住所を更新しました');
+        }
     }
 }

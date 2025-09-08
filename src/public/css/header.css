@@ -233,11 +233,6 @@ body,
     }
 }
 
-/* ====== 9. その他 ====== */
-body {
-    background: #f5f7fa;
-}
-
 /* 入力欄・ボタンの微調整 */
 input,
 button {

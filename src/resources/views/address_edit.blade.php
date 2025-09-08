@@ -7,7 +7,7 @@
 @section('content')
 <div class="address-edit-container">
     <h2 class="address-edit-title">住所の変更</h2>
-    <form action="{{ route('address.update', $item->id) }}" method="POST" class="address-edit-form">
+    <form action="{{ route('address.update', $item_id) }}" method="POST" class="address-edit-form">
         @csrf
         <div class="form-group">
             <label for="postal_code" class="address-edit-label">郵便番号</label>

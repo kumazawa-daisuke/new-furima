@@ -10,7 +10,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddressController;
-
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\RatingController;
 
 // 認証不要のルート
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
@@ -36,9 +37,16 @@ Route::get('/email/verify', function () {
 // 認証リンクからのアクセス
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect()->route('items.index'); // 認証後のリダイレクト先
-})->middleware(['auth', 'signed'])->name('verification.verify');
+    
+    $user = $request->user();
+    if (!$user->address) {
+        // 住所が未登録なら住所登録ページへリダイレクト
+        return redirect()->route('address.edit', ['item_id' => 0]);
+    }
 
+    // 住所が登録済みなら商品一覧ページへリダイレクト
+    return redirect()->route('items.index');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 // 再送信処理
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
@@ -69,4 +77,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // プロフィール編集
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // チャット関連ルート
+    Route::get('/chat/{purchase}', [ChatController::class, 'show'])->name('chat');
+    Route::post('/chat/{purchase}', [ChatController::class, 'store'])->name('chat.store');
+    Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
+    Route::put('/chat/{message}', [ChatController::class, 'update'])->name('chat.update');
+    // 評価関連ルート
+    Route::post('/rate', [RatingController::class, 'store'])->name('ratings.store');
+    // 取引完了用ルート（ChatControllerに追加）
+    Route::post('/chat/{purchase}/complete-transaction', [ChatController::class, 'completeTransaction'])->name('chat.complete');
 });

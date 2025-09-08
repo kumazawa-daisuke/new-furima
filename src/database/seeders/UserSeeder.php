@@ -16,13 +16,26 @@ class UserSeeder extends Seeder
     {
         User::insert([
             [
-                'id' => 1,
-                'name' => 'テストユーザー',
-                'email' => 'test@example.com',
-                'password' => bcrypt('password123'),
+                'name' => '出品者1',
+                'email' => 'test1@example.com',
+                'password' => bcrypt('password'),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
+            [
+                'name' => '出品者2',
+                'email' => 'test2@example.com',
+                'password' => bcrypt('password'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => '購入者',
+                'email' => 'test3@example.com',
+                'password' => bcrypt('password'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

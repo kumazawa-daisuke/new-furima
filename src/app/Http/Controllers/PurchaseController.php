@@ -7,8 +7,6 @@ use App\Models\Item;
 use App\Http\Requests\PurchaseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Stripe\Stripe;
-use Stripe\Checkout\Session as StripeSession;
 
 class PurchaseController extends Controller
 {
@@ -38,7 +36,7 @@ class PurchaseController extends Controller
         }
 
         $validated = $request->validated();
-
+        
         // Stripe初期化
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -55,34 +53,56 @@ class PurchaseController extends Controller
                 'price_data' => [
                     'currency' => 'jpy',
                     'product_data' => ['name' => $item->name],
-                    'unit_amount' => $item->price, // Stripeの単位に注意（既に1円単位なら*100不要）
+                    'unit_amount' => $item->price,
                 ],
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('purchase.thanks'),
+            // success_urlに商品IDなどの必要な情報をクエリパラメータとして渡す
+            'success_url' => route('purchase.thanks', [
+                'item_id' => $item->id,
+                'payment_method' => $paymentMethod,
+                'shipping' => $validated['shipping']
+            ]),
             'cancel_url' => route('purchase.form', ['item_id' => $item->id]),
             'customer_email' => $user->email,
         ]);
 
-        // ここでDB保存する場合、未決済データが入ることは念頭に
+        return redirect($session->url, 303);
+    }
+
+    // サンクスページ表示 & データベース保存
+    public function thanks(Request $request)
+    {
+        // 必須パラメータのチェック
+        if (!$request->has(['item_id', 'payment_method', 'shipping'])) {
+            // パラメータが不足している場合、エラーとしてフォームに戻す
+            return redirect()->route('items.index')->with('error', '購入情報が不正です。');
+        }
+
+        $item = Item::findOrFail($request->input('item_id'));
+        $user = Auth::user();
+
+        // 購入済みでないか確認
+        if ($item->status == 1) {
+            // 既に売り切れている場合は、重複して購入レコードを作成しない
+            return view('purchase_thanks');
+        }
+
+        // 購入レコードを作成
         Purchase::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
-            'payment_method' => $paymentMethod,
+            'payment_method' => $request->input('payment_method'),
             'price' => $item->price,
-            'shipping' => $validated['shipping'],
+            'shipping' => $request->input('shipping'),
+            'status' => 'in_progress', // 新しいステータス
         ]);
 
+        // 商品のステータスを「売り切れ」に更新
         $item->status = 1;
         $item->save();
 
-        return redirect($session->url);
-    }
-
-    // サンクスページ表示
-    public function thanks()
-    {
         return view('purchase_thanks');
     }
 }
