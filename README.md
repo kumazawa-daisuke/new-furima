@@ -40,26 +40,31 @@ php artisan storage:link
 STRIPE_SECRET=sk_test_xxxxxxxxxxxxxxxxxxxxxxx  
 STRIPE_PUBLIC_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxx  
 
-##サンプル用ログインアドレス・パスワード  
-メールアドレス:test@example.com  
-パスワード:password123  
+##ダミーユーザー用ログインアドレス・パスワード  
+出品者1  
+メールアドレス:test1@example.com  
+出品者2  
+メールアドレス:test2@example.com  
+購入者  
+メールアドレス:test3@example.com  
+パスワード(共通):password
 
 ##備考  
 ・商品購入時はコンビニ決済では購入を完了できません   
 ・クレジットカード決済でカード番号を424242424242,期限を先の年月とすると購入を完了できます  
-・メール認証後のページは商品一覧ページにしています（テストケース記載通り）  
 ・購入完了後にサンクスページを追加しています  
 ・ログインしないで商品一覧ページにアクセスした際にマイリストが表示されないようにしています  
 
 
 ## 使用技術(実行環境)
-・PHP8.0  
+・PHP8.0.30
 ・Laravel8.83.8  
 ・MySQL8.0.26  
 ・MailHog（開発用メールサーバ）  
 
 ## ER図
-<img width="1001" height="821" alt="E-R - furima" src="https://github.com/user-attachments/assets/f05d7695-7133-4b81-972b-3205f70931a7" />
+<img width="771" height="1051" alt="E-R - new-furima" src="https://github.com/user-attachments/assets/49c96fab-50aa-4b18-957e-40e5bc6f092a" />
+
 
 ## URL
 ・開発環境：http://localhost/  
