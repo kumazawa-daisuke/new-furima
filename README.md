@@ -1,7 +1,7 @@
 # フリマアプリ
 ## 環境構築
 ### Dockerビルド
-1. git clone git@github.com:kumazawa-daisuke/furima.git
+1. git clone git@github.com:kumazawa-daisuke/new-furima.git
 2. DockerDesktopアプリを立ち上げる
 3. docker-compose up -d --build
 ### Laravel環境構築
@@ -40,16 +40,16 @@ php artisan storage:link
 STRIPE_SECRET=sk_test_xxxxxxxxxxxxxxxxxxxxxxx  
 STRIPE_PUBLIC_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxx  
 
-##ダミーユーザー用ログインアドレス・パスワード  
+## ダミーユーザー用ログインアドレス・パスワード  
 出品者1  
 メールアドレス:test1@example.com  
 出品者2  
 メールアドレス:test2@example.com  
 購入者  
 メールアドレス:test3@example.com  
-パスワード(共通):password
+パスワード(共通):password  
 
-##備考  
+## 備考  
 ・商品購入時はコンビニ決済では購入を完了できません   
 ・クレジットカード決済でカード番号を424242424242,期限を先の年月とすると購入を完了できます  
 ・購入完了後にサンクスページを追加しています  
